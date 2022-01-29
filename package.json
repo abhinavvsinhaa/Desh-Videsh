@@ -1,0 +1,24 @@
+{
+  "name": "videoai",
+  "version": "1.0.0",
+  "description": "Swamphacks VIII project.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon sever.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhinavvsinhaa/videoAI.git"
+  },
+  "author": "Abhinav Sinha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhinavvsinhaa/videoAI/issues"
+  },
+  "homepage": "https://github.com/abhinavvsinhaa/videoAI#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}
