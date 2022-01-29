@@ -1,43 +1,29 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 
-dotenv.config({'path': './.env'})
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
+
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 
 const app = express();
-const server = require('http').createServer(app);
+app.use(cors());
 
-const io = require('socket.io')(server, {
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: "*"
     }
 })
 
-app.use(cors());
-
-io.on('connection', (socket) => {
-    socket.emit('connectionId', socket.id);
-
-    socket.on('disconnect', () => {
-        socket.brodcast.emit('call ended');
-    })
-
-    socket.on('callUser', ({ userToCall, signalData, from, name }) => {
-        io.to(userToCall).emit('callUser', {
-            signal: signalData,
-            from,
-            name
-        })
-    })
-
-    socket.on('answerCall', (data) => {
-        io.to(data.to).emit('callAccepted', data.signal);
-    })
+io.on("connection", (socket) => {
+    // emit socket id to the client, from which connection is established to the server
+    socket.emit("established", socket.id);
 })
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
 })
