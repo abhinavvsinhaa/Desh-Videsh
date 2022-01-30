@@ -1,3 +1,7 @@
+.container-fluid {
+    background-color: #202124;
+}
+
 .row {
     height: 100vh;
 }

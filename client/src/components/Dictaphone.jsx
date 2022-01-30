@@ -34,7 +34,12 @@ const Dictaphone = () => {
 
   return (
     <>
+        <span style={{fontSize: '18px', fontWeight: '500', color: '#f5f5f5'}}>
+        {callDetails.from}: &nbsp;&nbsp;
+        </span>
+        <span style={{fontSize: '20px', color: 'white'}}>
         {message}
+        </span>
         <br/>
     </>
   );

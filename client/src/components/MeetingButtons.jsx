@@ -38,7 +38,10 @@ const MeetingButtons = () => {
 
     if (callAccepted) {
         return (
-            <CallEndIcon style={{color: 'red', fontSize: "30px"}} onClick={declineCall}/>
+            <button style={{backgroundColor: '#E54D04'}}> 
+                <span style={{fontSize: '16px', color: 'white', fontWeight: "500"}}>Decline</span>
+                <CallEndIcon style={{color: 'white', fontSize: "26px", marginLeft: '20px'}} onClick={declineCall}/>
+            </button>
         );
     }
 }
