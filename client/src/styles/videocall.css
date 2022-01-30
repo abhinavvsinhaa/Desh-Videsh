@@ -1,0 +1,15 @@
+.row {
+    height: 100vh;
+}
+
+.col-xl-6 {
+    height: 100%;
+}
+
+.inner-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
