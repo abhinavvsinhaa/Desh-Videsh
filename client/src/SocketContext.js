@@ -14,6 +14,7 @@ const Context = ({ children }) => {
     const [callAccepted, setCallAccepted] = useState(false);
     const [callDetails, setCallDetails] = useState({});
     const [callEnded, setCallEnded] = useState(false);
+    const [message, setMessage] = useState('');
 
     const myVideo = useRef();
     const recieverVideo = useRef();
@@ -39,7 +40,12 @@ const Context = ({ children }) => {
         socket.on("callUser", ({ from, signal }) => {
             setCallDetails({ isRecieving: true, from, signal });
         })
+        
+        socket.on("recieve-message", ({ message }) => {
+            setMessage(message)
+        })
     }, []);
+
 
     const callUser = ({ recieverId }) => {
         let peer = new Peer({ initiator: true, stream: media, trickle: false })
@@ -47,21 +53,18 @@ const Context = ({ children }) => {
         console.log("trying to call", recieverId);
 
         peer.on("signal", data => {
-            console.log("emitting call user");
-            socket.emit("callUser", ({
+            socket.emit("callUser", {
                 signal: data,
                 from: connectionId,
                 to: recieverId
-            }))
+            })
         })
 
         peer.on("stream", stream => {
-            console.log("streaming peer");
             recieverVideo.current.srcObject = stream;
         })
 
         socket.on("acceptCall", signal => {
-            console.log("socket on accept call");
             peer.signal(signal);
             setCallAccepted(true);
         })
@@ -71,6 +74,7 @@ const Context = ({ children }) => {
 
     const acceptCall = () => {
         setCallAccepted(true);
+        console.log("accept call");
 
         let peer = new Peer({ initiator: false, stream: media, trickle: false })
 
@@ -93,6 +97,13 @@ const Context = ({ children }) => {
         window.location.reload();
     }
 
+    const sendMessage = (id, message) => {
+        socket.emit("message", { 
+            to: id,
+            message
+        })
+    }
+
     return (
         <SocketContext.Provider value={{
             media, 
@@ -102,9 +113,11 @@ const Context = ({ children }) => {
             myVideo,
             recieverVideo,
             callEnded,
+            message,
             callUser,
             acceptCall,
-            declinCall
+            declinCall,
+            sendMessage
         }}>
             {children}
         </SocketContext.Provider>

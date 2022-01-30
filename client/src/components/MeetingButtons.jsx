@@ -5,7 +5,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import CallEndIcon from '@mui/icons-material/CallEnd';
 
 const MeetingButtons = () => {
-    const { callAccepted, callEnded, callUser, connectionId } = useContext(SocketContext);
+    const { callAccepted, callEnded, callUser, connectionId, declineCall } = useContext(SocketContext);
 
     const [reciever, setReciever] = useState('');
 
@@ -38,7 +38,7 @@ const MeetingButtons = () => {
 
     if (callAccepted) {
         return (
-            <CallEndIcon />
+            <CallEndIcon style={{color: 'red', fontSize: "30px"}} onClick={declineCall}/>
         );
     }
 }
