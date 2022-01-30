@@ -1,2 +1,2 @@
-# videoAI
+# Desh Videsh
 Swamphacks VIII project.
